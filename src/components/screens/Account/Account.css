@@ -1,0 +1,9 @@
+.account-container {
+    display: flex;
+    margin: 2rem auto;
+    flex-direction: column;
+    background-color: #212024;
+    width: 20rem;
+    height: 30rem;
+    border-radius: 12px;
+}

@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
+import {useState} from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Home from "./components/screens/home/Home";
+import Navigation from "./components/navigation/Navigation";
+import Account from "./components/screens/Account/Account";
+
+
+const App: React.FC = () => {
+    const savedPage = localStorage.getItem('activePage') || 'home';
+
+    const [page, setPage] = useState(savedPage);
+
+    const handlePageChange = (page: string) => {
+        setPage(page);
+        localStorage.setItem('activePage', page);
+    }
+
+    return (
+        <div className="app-container">
+            <div className="content">
+                <Navigation onPageChange={handlePageChange} page={page}/>
+                <div className="main-content">
+                    {page === 'home' && <Home/>}
+                    {page === 'account' && <Account/>}
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export default App;

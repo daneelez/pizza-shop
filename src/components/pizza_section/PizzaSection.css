@@ -1,0 +1,14 @@
+.pizza-section {
+}
+
+.pizza-section-title {
+    font-size: 3rem;
+    color: #D1D1D1;
+    margin-bottom: 0.75rem;
+}
+
+.pizza-list {
+    display: flex;
+    flex-direction: row;
+    gap: 2.5rem;
+}
