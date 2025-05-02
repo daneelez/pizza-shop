@@ -1,0 +1,47 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p,
+a, img, ol, ul, li, table, tr, th, td,
+article, aside, canvas, footer, header, nav, section {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+}
+
+button {
+    font-family: "Tektur";
+}
+
+body {
+    margin: 0;
+    font-family: "Tektur";
+    background-color: #2C2D30;
+    line-height: 1;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+strong, b, em, i {
+    font-weight: bold;
+}

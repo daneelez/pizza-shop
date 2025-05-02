@@ -1,0 +1,41 @@
+.nav-container {
+    width: 100%;
+    background-color: #212024;
+    height: 14vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-list {
+    display: flex;
+    flex-direction: row;
+    gap: 8.25vw;
+}
+
+.nav-item button {
+    position: relative;
+    border: none;
+    background-color: transparent;
+    color: #d1d1d1;
+    font-size: 2rem;
+    cursor: pointer;
+    user-select: none;
+    padding: 5px;
+}
+
+.nav-item button::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    width: 0%;
+    background-color: #d1d1d1;
+    transition: width 0.3s ease-in-out;
+}
+
+.nav-item button.active::after {
+    width: 100%;
+}
