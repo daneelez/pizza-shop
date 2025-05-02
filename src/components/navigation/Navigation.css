@@ -6,6 +6,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border-bottom: 1px solid #d1d1d1;
 }
 
 .nav-list {
@@ -31,7 +32,7 @@
     bottom: 0;
     left: 0;
     height: 1px;
-    width: 0%;
+    width: 0;
     background-color: #d1d1d1;
     transition: width 0.3s ease-in-out;
 }

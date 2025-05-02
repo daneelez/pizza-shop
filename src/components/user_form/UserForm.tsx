@@ -1,6 +1,8 @@
 import './UserForm.css'
 import {useUser} from '../../contexts/UserContext'
 import {useState} from "react";
+import CommandButton from "../command_button/CommandButton";
+import InputField from "../input_field/InputField";
 
 const UserForm = () => {
     const {user, login, logout, register} = useUser();
@@ -37,48 +39,23 @@ const UserForm = () => {
                 className='auth-container'
                 style={{display: !user ? 'flex' : 'none'}}
             >
-                <input
-                    className='user-form-input'
-                    type="text"
-                    placeholder="Имя пользователя"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <input
-                    className='user-form-input'
-                    type="password"
-                    placeholder="Пароль"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                <InputField type={'text'} placeholder={'Имя пользователя'} value={name}
+                            onChange={setName}/>
+                <InputField type={'password'} placeholder={'Пароль'} value={password}
+                            onChange={setPassword}/>
             </div>
             <div
                 className='auth-container'
                 style={{display: !user ? 'flex' : 'none'}}
             >
-                <button
-                    className='login-button'
-                    onClick={handleLogin}
-                >
-                    Войти
-                </button>
-                <button
-                    className='register-button'
-                    onClick={handleRegister}
-                >
-                    Создать аккаунт
-                </button>
+                <CommandButton size={"large"} type={'white'} command={handleLogin} title={"Войти"}/>
+                <CommandButton size={"large"} type={'black'} command={handleRegister} title={"Создать аккаунт"}/>
             </div>
             <div
                 className='auth-container'
                 style={{display: user ? 'flex' : 'none'}}
             >
-                <button
-                    className='login-button'
-                    onClick={handleLogout}
-                >
-                    Выйти
-                </button>
+                <CommandButton size={"large"} type={'white'} command={handleLogout} title={"Выйти"}/>
             </div>
         </div>
     );

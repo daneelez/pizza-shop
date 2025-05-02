@@ -1,0 +1,21 @@
+.input-field {
+    background-color: #2C2D30;
+    border: none;
+    height: 2rem;
+    width: 16rem;
+    margin-top: 0.75rem;
+    border-radius: 8px;
+    outline: none;
+    caret-color: #D1D1D1;
+    color: #D1D1D1;
+    text-align: center;
+}
+
+.input-field:focus::placeholder {
+    color: transparent;
+}
+
+.input-field::placeholder {
+    color: #D1D1D1;
+    text-align: center;
+}

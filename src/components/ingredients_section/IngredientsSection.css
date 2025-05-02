@@ -1,10 +1,10 @@
-.pizza-section {
+.ingredient-section {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
 }
 
-.pizza-list {
+.ingredient-list {
     display: flex;
     flex-direction: row;
     gap: 2.5rem;

@@ -3,7 +3,8 @@ import './App.css';
 
 import Home from "./components/screens/home/Home";
 import Navigation from "./components/navigation/Navigation";
-import Account from "./components/screens/Account/Account";
+import Account from "./components/screens/account/Account";
+import Control from "./components/screens/control/Control";
 
 
 const App: React.FC = () => {
@@ -23,6 +24,7 @@ const App: React.FC = () => {
                 <div className="main-content">
                     {page === 'home' && <Home/>}
                     {page === 'account' && <Account/>}
+                    {page === 'control' && <Control/>}
                 </div>
             </div>
         </div>

@@ -1,0 +1,25 @@
+.control-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 2rem 3rem;
+    width: 100%;
+}
+
+.control-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+}
+
+.control-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}

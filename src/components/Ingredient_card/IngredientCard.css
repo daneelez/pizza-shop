@@ -1,0 +1,39 @@
+.ingredient-card-container {
+    background-color: #212024;
+    border-radius: 16px;
+    height: 12rem;
+    width: 12rem;
+    padding: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
+    color: #D1D1D1;
+}
+
+.ingredient-card-title {
+    font-size: 1.5rem;
+}
+
+.ingredient-card-order-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-top: 0.5rem;
+}
+
+.double-button {
+    background-color: #D98425;
+    color: #212024;
+    border: none;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.ingredient-card-container svg {
+    margin-top: -0.5rem;
+}

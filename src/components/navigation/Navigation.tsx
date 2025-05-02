@@ -22,9 +22,9 @@ const Navigation: React.FC<NavigationProps> = ({onPageChange, page}) => {
                     </button>
                 </li>
                 <li className="nav-item">
-                    <button className={page === 'create' ? 'active' : ''}
-                            onClick={() => onPageChange('create')}>
-                        Создать
+                    <button className={page === 'control' ? 'active' : ''}
+                            onClick={() => onPageChange('control')}>
+                        Управление
                     </button>
                 </li>
                 <li className="nav-item">

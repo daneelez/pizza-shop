@@ -56,3 +56,7 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+.pizza-card-container svg {
+    margin-top: -2rem;
+}
