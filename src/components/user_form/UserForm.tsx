@@ -40,9 +40,9 @@ const UserForm = () => {
                 style={{display: !user ? 'flex' : 'none'}}
             >
                 <InputField type={'text'} placeholder={'Имя пользователя'} value={name}
-                            onChange={setName}/>
+                            onChangeString={setName} size={'large'}/>
                 <InputField type={'password'} placeholder={'Пароль'} value={password}
-                            onChange={setPassword}/>
+                            onChangeString={setPassword} size={'large'}/>
             </div>
             <div
                 className='auth-container'

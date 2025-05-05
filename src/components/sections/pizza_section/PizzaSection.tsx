@@ -1,6 +1,6 @@
 import './PizzaSection.css'
-import PizzaCard from "../pizza_card/PizzaCard";
-import CreateCard from "../create_card/CreateCard";
+import PizzaCard from "../../cards/pizza_card/PizzaCard";
+import CreateCard from "../../create_card/CreateCard";
 
 interface PizzaSectionProps {
     createCard?: boolean;

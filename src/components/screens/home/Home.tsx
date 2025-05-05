@@ -1,6 +1,8 @@
 import './Home.css'
-import PizzaSection from "../../pizza_section/PizzaSection";
-import IngredientsSection from "../../ingredients_section/IngredientsSection";
+import PizzaSection from "../../sections/pizza_section/PizzaSection";
+import IngredientsSection from "../../sections/ingredients_section/IngredientsSection";
+import PizzaBaseSection from "../../sections/pizza_base_section/PizzaBaseSection";
+import PizzaSideSection from "../../sections/pizza_side_section/PizzaSideSection";
 
 const Home = () => {
     return (
@@ -8,8 +10,12 @@ const Home = () => {
             <section className="home-section-container">
                 <p className='home-section-title'>Пицца</p>
                 <PizzaSection/>
+                <p className='home-section-title'>Основы</p>
+                <PizzaBaseSection/>
                 <p className='home-section-title'>Ингредиенты</p>
                 <IngredientsSection/>
+                <p className='home-section-title'>Бортики</p>
+                <PizzaSideSection/>
             </section>
         </div>
     );

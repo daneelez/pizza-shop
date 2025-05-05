@@ -1,9 +1,22 @@
-.input-field {
-    background-color: #2C2D30;
-    border: none;
+.input-field-small {
+    height: 2rem;
+    width: 5rem;
+    background: #2C2D30;
+}
+
+.input-field-medium {
+
+}
+
+.input-field-large {
     height: 2rem;
     width: 16rem;
     margin-top: 0.75rem;
+    background-color: #2C2D30;
+}
+
+.input-field {
+    border: none;
     border-radius: 8px;
     outline: none;
     caret-color: #D1D1D1;

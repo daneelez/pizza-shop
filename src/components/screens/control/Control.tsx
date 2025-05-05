@@ -1,9 +1,11 @@
 import CommandButton from "../../command_button/CommandButton";
 import {useState} from "react";
 import './Control.css'
-import PizzaSection from "../../pizza_section/PizzaSection";
-import IngredientsSection from "../../ingredients_section/IngredientsSection";
-import CreateSection from "../../create_section/CreateSection";
+import PizzaSection from "../../sections/pizza_section/PizzaSection";
+import IngredientsSection from "../../sections/ingredients_section/IngredientsSection";
+import CreateSection from "../../sections/create_section/CreateSection";
+import PizzaBaseSection from "../../sections/pizza_base_section/PizzaBaseSection";
+import PizzaSideSection from "../../sections/pizza_side_section/PizzaSideSection";
 
 const Control = () => {
     const [currentFocus, setCurrentFocus] = useState('');
@@ -58,6 +60,20 @@ const Control = () => {
                 {currentFocus === 'ingredients' &&
                     <>
                         <IngredientsSection/>
+                    </>
+                }
+            </div>
+            <div className='control-content'>
+                {currentFocus === 'bases' &&
+                    <>
+                        <PizzaBaseSection/>
+                    </>
+                }
+            </div>
+            <div className='control-content'>
+                {currentFocus === 'sides' &&
+                    <>
+                        <PizzaSideSection/>
                     </>
                 }
             </div>

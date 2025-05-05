@@ -29,6 +29,24 @@ const CreateCard: React.FC<CreateCardProps> = ({type, onCreate}) => {
                     <IconPlus size={pixelSize}/>
                 </div>
             }
+
+            {type === 'base' &&
+                <div className="ingredient-card-container create-card"
+                     style={{alignItems: 'center', justifyContent: 'center'}}
+                     onClick={onCreate}
+                >
+                    <IconPlus size={pixelSize}/>
+                </div>
+            }
+
+            {type === 'side' &&
+                <div className='pizza-card-container create-card'
+                     style={{alignItems: 'center', justifyContent: 'center'}}
+                     onClick={onCreate}
+                >
+                    <IconPlus size={pixelSize}/>
+                </div>
+            }
         </>
     );
 }

@@ -1,0 +1,23 @@
+.pizza-side-card-not-allowed-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: auto;
+    background-color: #D1D1D1;
+    border-radius: 8px;
+    color: #212024;
+    border: none;
+    font-weight: bold;
+    padding: 0.5rem 0.5rem 1rem 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.toggle-button {
+    background-color: #D98425;
+    color: #212024;
+    border: none;
+    padding: 1rem 2.2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}

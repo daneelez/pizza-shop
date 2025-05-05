@@ -9,9 +9,9 @@
     border-radius: 12px;
 }
 
-.user-form-title {
+.create-section-title {
     color: #D1D1D1;
-    margin-top: 2rem;
+    padding: 1rem;
     font-size: 1.6rem;
     font-weight: 400;
     width: 92%;
@@ -26,7 +26,7 @@
     justify-content: center;
 }
 
-.auth-container {
+.create-method-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -34,30 +34,7 @@
     margin-top: 1rem;
 }
 
-.user-form-input {
-    background-color: #2C2D30;
-    border: none;
-    height: 2rem;
-    width: 10rem;
-    margin-top: 0.75rem;
-    border-radius: 8px;
-    outline: none;
-    caret-color: #D1D1D1;
-    color: #D1D1D1;
-    text-align: center;
-}
-
-.user-form-input:focus::placeholder {
-    color: transparent;
-}
-
-.user-form-input::placeholder {
-    color: #D1D1D1;
-    text-align: center;
-}
-
-.user-form-description {
-    color: #D1D1D1;
-    width: 10rem;
-    text-align: center;
+.button-back-container {
+    padding: 0.7rem;
+    margin: 0.3rem;
 }

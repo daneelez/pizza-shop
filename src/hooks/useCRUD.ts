@@ -19,7 +19,7 @@ export const useCRUD = <ResponseType, RequestType>(prefix: string) => {
                 headers,
                 body: JSON.stringify({id: userID, ...data}),
             });
-
+            console.log(response);
             if (!response.ok) {
                 const error = await response.text();
                 return {data: null, error: error};
@@ -72,12 +72,13 @@ export const useCRUD = <ResponseType, RequestType>(prefix: string) => {
         }
     };
 
-    const getAll = async (userID: string): Promise<CRUDResponse<ResponseType[]>> => {
+    const getAll = async (userID: string, filterData?: any | null): Promise<CRUDResponse<ResponseType[]>> => {
         try {
+            console.log(filterData);
             const res = await fetch(`${baseURL}/read`, {
                 method: 'POST',
                 headers,
-                body: JSON.stringify({id: userID}),
+                body: JSON.stringify({id: userID, filterData: filterData}),
             });
 
 
