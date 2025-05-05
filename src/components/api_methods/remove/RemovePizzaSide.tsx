@@ -2,48 +2,48 @@ import '../Methods.css'
 import {useState} from "react";
 import CommandButton from "../../command_button/CommandButton";
 import {useCRUD} from "../../../hooks/useCRUD";
-import {usePizzaBase} from "../../../contexts/PizzaBaseContext";
-import {PizzaBaseProps, PizzaBaseRequest} from "../../../props/PizzaBase";
 import PizzaBaseCard from "../../cards/pizza_base_card/PizzaBaseCard";
+import {PizzaSideProps, PizzaSideRequest} from "../../../props/PizzaSide";
+import {usePizzaSide} from "../../../contexts/PizzaSideContext";
 
-interface RemovePizzaBaseProps {
+interface RemovePizzaSideProps {
     userID: string;
 }
 
-const RemovePizzaBase: React.FC<RemovePizzaBaseProps> = ({userID}) => {
-    const [curBase, setCurBase] = useState<PizzaBaseProps | null>(null);
+const RemovePizzaSide: React.FC<RemovePizzaSideProps> = ({userID}) => {
+    const [curSide, setCurSide] = useState<PizzaSideProps | null>(null);
 
-    const {bases, setBases} = usePizzaBase();
+    const {sides, setSides} = usePizzaSide();
 
-    const {remove, getAll} = useCRUD<PizzaBaseProps, PizzaBaseRequest>('/bases');
+    const {remove, getAll} = useCRUD<PizzaSideProps, PizzaSideRequest>('/sides');
 
     const handleRemove = async () => {
-        if (!curBase) {
+        if (!curSide) {
             return;
         }
 
         try {
-            await remove(userID, curBase.id);
+            await remove(userID, curSide.id);
             const currentList = await getAll(userID).then(res =>
                 res.data ? res.data : []);
 
-            setBases(currentList);
-            setCurBase(null);
+            setSides(currentList);
+            setCurSide(null);
         } catch (error) {
         }
     }
 
     return (
         <>
-            {!curBase ? (
+            {!curSide ? (
                 <ul className="ingredient-list ingredient-list-control">
-                    {bases.map((base: PizzaBaseProps) => (
+                    {sides.map((side: PizzaSideProps) => (
                         <PizzaBaseCard
-                            key={base.id}
-                            name={base.name}
-                            price={base.price}
+                            key={side.id}
+                            name={side.name}
+                            price={side.price}
                             onClick={() => {
-                                setCurBase(base);
+                                setCurSide(side);
                             }}
                         />
                     ))}
@@ -57,4 +57,4 @@ const RemovePizzaBase: React.FC<RemovePizzaBaseProps> = ({userID}) => {
     );
 }
 
-export default RemovePizzaBase;
+export default RemovePizzaSide;

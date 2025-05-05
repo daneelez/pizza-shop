@@ -1,16 +1,17 @@
 import './PizzaSideSection.css'
 import PizzaSideCard from "../../cards/pizza_side_card/PizzaSideCard";
 import CreateCard from "../../create_card/CreateCard";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useCRUD} from "../../../hooks/useCRUD"
 import {useUser} from "../../../contexts/UserContext";
 import {usePizzaSide} from "../../../contexts/PizzaSideContext";
 import {PizzaSideProps} from "../../../props/PizzaSide";
 import FilterSection from "../../filters/FilterSection";
 import {usePriceFilter} from "../../../hooks/usePriceFilter";
-import {PriceData, PriceFilterData} from "../../../props/PriceData";
-import {IngredientProps} from "../../../props/Ingredient";
+import {PriceData} from "../../../props/PriceData";
+import {IngredientFilterProps, IngredientProps} from "../../../props/Ingredient";
 import {PizzaProps} from "../../../props/Pizza";
+import {IngredientsFilterData} from "../../../props/FilterData";
 
 interface PizzaSideSectionProps {
     onCreateCard?: () => void;
@@ -20,6 +21,8 @@ const PizzaSideSection: React.FC<PizzaSideSectionProps> = ({onCreateCard}) => {
     const {sides, setSides} = usePizzaSide();
     const {getAll} = useCRUD<PizzaSideProps, any>('/sides');
     const {user} = useUser();
+
+    const [selectedIngredients, setSelectedIngredients] = useState<IngredientProps[]>([]);
 
     const {
         minPrice, maxPrice,
@@ -37,9 +40,15 @@ const PizzaSideSection: React.FC<PizzaSideSectionProps> = ({onCreateCard}) => {
         handleChangeMaxPrice: handleChangeMaxPrice,
     }
 
-    const filterData: PriceFilterData = {
+    const ingredientFilterProps: IngredientFilterProps = {
+        selectedIngredients: selectedIngredients,
+        setSelectedIngredients: setSelectedIngredients,
+    }
+
+    const filterData: IngredientsFilterData = {
         minPrice: minPrice,
         maxPrice: maxPrice,
+        ingredients: selectedIngredients,
     }
 
     useEffect(() => {
@@ -54,7 +63,7 @@ const PizzaSideSection: React.FC<PizzaSideSectionProps> = ({onCreateCard}) => {
                 }
             });
         }
-    }, [user, minPrice, maxPrice]);
+    }, [user, minPrice, maxPrice, selectedIngredients]);
 
     return (
         <section className="ingredient-section">
@@ -70,7 +79,7 @@ const PizzaSideSection: React.FC<PizzaSideSectionProps> = ({onCreateCard}) => {
                 ))}
                 <CreateCard type='side' onCreate={onCreateCard ? onCreateCard : () => 0}/>
             </ul>
-            <FilterSection priceData={priceData}/>
+            <FilterSection priceData={priceData} ingredientsData={ingredientFilterProps}/>
         </section>
     );
 }

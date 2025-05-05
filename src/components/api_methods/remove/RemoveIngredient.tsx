@@ -23,18 +23,13 @@ const RemoveIngredient: React.FC<RemoveIngredientProps> = ({userID}) => {
         }
 
         try {
-            await remove(userID, curIngredient);
+            await remove(userID, curIngredient.id);
             const currentList = await getAll(userID).then(res =>
                 res.data ? res.data : []);
 
             setIngredients(currentList);
             setCurIngredient(null);
-
-            console.log(currentList);
-
         } catch (error) {
-            console.error(error);
-            alert("Ошибка при создании ингредиента!");
         }
     }
 

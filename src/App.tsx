@@ -5,16 +5,14 @@ import Home from "./components/screens/home/Home";
 import Navigation from "./components/navigation/Navigation";
 import Account from "./components/screens/account/Account";
 import Control from "./components/screens/control/Control";
+import NotifyToaster from "./components/notify_toaster/NotifyToaster";
 
 
 const App: React.FC = () => {
-    const savedPage = localStorage.getItem('activePage') || 'home';
-
-    const [page, setPage] = useState(savedPage);
+    const [page, setPage] = useState('home');
 
     const handlePageChange = (page: string) => {
         setPage(page);
-        localStorage.setItem('activePage', page);
     }
 
     return (
@@ -27,6 +25,7 @@ const App: React.FC = () => {
                     {page === 'control' && <Control/>}
                 </div>
             </div>
+            <NotifyToaster/>
         </div>
     );
 }

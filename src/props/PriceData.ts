@@ -6,8 +6,3 @@ export interface PriceData {
     handleChangeLocalMin: (value: string) => void;
     handleChangeLocalMax: (value: string) => void;
 }
-
-export interface PriceFilterData {
-    minPrice: number;
-    maxPrice: number;
-}

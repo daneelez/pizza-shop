@@ -7,8 +7,9 @@ import {usePizzaBase} from "../../../contexts/PizzaBaseContext";
 import {PizzaBaseProps} from "../../../props/PizzaBase";
 import FilterSection from "../../filters/FilterSection";
 import {usePriceFilter} from "../../../hooks/usePriceFilter";
-import {PriceData, PriceFilterData} from "../../../props/PriceData";
+import {PriceData} from "../../../props/PriceData";
 import PizzaBaseCard from "../../cards/pizza_base_card/PizzaBaseCard";
+import {PriceFilterData} from "../../../props/FilterData";
 
 interface PizzaBaseSectionProps {
     onCreateCard?: () => void;

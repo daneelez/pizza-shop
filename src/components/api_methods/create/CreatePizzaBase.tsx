@@ -19,15 +19,7 @@ const CreatePizzaBase: React.FC<CreatePizzaBaseProps> = ({userID}) => {
     const {create} = useCRUD<PizzaBaseProps, PizzaBaseRequest>('/bases');
 
     const handleCreate = async () => {
-        if (!name || !price) {
-            return;
-        }
-
         const floatPrice = parseFloat(price);
-        if (isNaN(floatPrice) || floatPrice < 0) {
-            alert("Введите корректную цену!");
-            return;
-        }
 
         const data = {
             name: name,
@@ -43,7 +35,6 @@ const CreatePizzaBase: React.FC<CreatePizzaBaseProps> = ({userID}) => {
             setName('');
             setPrice('');
         } catch (error) {
-            alert("Ошибка при создании основы!");
         }
     }
 

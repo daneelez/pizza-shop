@@ -19,15 +19,7 @@ const CreateIngredient: React.FC<CreateIngredientProps> = ({userID}) => {
     const {create} = useCRUD<IngredientProps, IngredientRequest>('/ingredients');
 
     const handleCreate = async () => {
-        if (!name || !price) {
-            return;
-        }
-
         const floatPrice = parseFloat(price);
-        if (isNaN(floatPrice) || floatPrice < 0) {
-            alert("Введите корректную цену!");
-            return;
-        }
 
         const data = {
             name: name,
@@ -43,7 +35,6 @@ const CreateIngredient: React.FC<CreateIngredientProps> = ({userID}) => {
             setName('');
             setPrice('');
         } catch (error) {
-            alert("Ошибка при создании ингредиента!");
         }
     }
 

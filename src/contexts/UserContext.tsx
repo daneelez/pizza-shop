@@ -1,4 +1,5 @@
 import {createContext, useContext, useEffect, useState} from "react";
+import {succesToaster, errorToaster} from "../components/notify_toaster/NotifyToaster";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const PREFIX = "/user";
@@ -37,15 +38,16 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({children}
             });
 
             if (response.ok) {
+                succesToaster('Успешная регистрация!');
                 const createdUser = await response.json();
                 setUser(createdUser);
                 localStorage.setItem("user", JSON.stringify(createdUser));
             } else {
-                alert("Не удалось зарегистрироваться!")
+                errorToaster('Ошибка регистрации!')
             }
 
         } catch (error) {
-            console.error(error);
+            errorToaster('Ошибка регистрации!')
         }
     }
 
@@ -60,18 +62,23 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({children}
             });
 
             if (response.ok) {
+                succesToaster('Успешный вход!');
                 const user = await response.json();
                 setUser(user);
                 localStorage.setItem("user", JSON.stringify(user));
             } else {
-                alert("Не удалось войти!")
+                errorToaster('Ошибка входа!')
             }
 
         } catch (error) {
-            console.error(error);
+            errorToaster('Ошибка входа!')
         }
     }
-    const logout = () => setUser(null);
+    const logout = () => {
+        succesToaster('Успешный выход!');
+        setUser(null);
+        localStorage.removeItem("user");
+    }
 
     return (
         <UserContext.Provider value={{user, login, logout, register}}>

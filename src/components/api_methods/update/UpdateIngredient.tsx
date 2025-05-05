@@ -26,10 +26,6 @@ const UpdateIngredient: React.FC<UpdateIngredientProps> = ({userID}) => {
         }
 
         const floatPrice = parseFloat(price);
-        if (isNaN(floatPrice) || floatPrice < 0) {
-            alert("Введите корректную цену!");
-            return;
-        }
 
         const data = {
             name: name,
@@ -37,7 +33,7 @@ const UpdateIngredient: React.FC<UpdateIngredientProps> = ({userID}) => {
         };
 
         try {
-            await update(userID, curIngredient, data);
+            await update(userID, curIngredient.id, data);
             const currentList = await getAll(userID).then(res =>
                 res.data ? res.data : []);
 
@@ -46,12 +42,7 @@ const UpdateIngredient: React.FC<UpdateIngredientProps> = ({userID}) => {
             setName('');
             setPrice('');
             setCurIngredient(null);
-
-            console.log(currentList);
-
         } catch (error) {
-            console.error(error);
-            alert("Ошибка при создании ингредиента!");
         }
     }
 

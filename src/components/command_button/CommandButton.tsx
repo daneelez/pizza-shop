@@ -13,7 +13,7 @@ const CommandButton: React.FC<CommandButtonProps> = ({size, type, command, title
 
     switch (size) {
         case "small":
-            width = 4
+            width = 5
             height = 3
             break;
         case "medium":

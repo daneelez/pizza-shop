@@ -26,10 +26,6 @@ const UpdatePizzaBase: React.FC<UpdatePizzaBaseProps> = ({userID}) => {
         }
 
         const floatPrice = parseFloat(price);
-        if (isNaN(floatPrice) || floatPrice < 0) {
-            alert("Введите корректную цену!");
-            return;
-        }
 
         const data = {
             name: name,
@@ -37,7 +33,7 @@ const UpdatePizzaBase: React.FC<UpdatePizzaBaseProps> = ({userID}) => {
         };
 
         try {
-            await update(userID, curBase, data);
+            await update(userID, curBase.id, data);
             const currentList = await getAll(userID).then(res =>
                 res.data ? res.data : []);
 
@@ -46,12 +42,7 @@ const UpdatePizzaBase: React.FC<UpdatePizzaBaseProps> = ({userID}) => {
             setName('');
             setPrice('');
             setCurBase(null);
-
-            console.log(currentList);
-
         } catch (error) {
-            console.error(error);
-            alert("Ошибка при создании основы!");
         }
     }
 

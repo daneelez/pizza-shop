@@ -8,7 +8,8 @@ import {useIngredients} from "../../../contexts/IngredientContext";
 import {IngredientProps} from "../../../props/Ingredient";
 import FilterSection from "../../filters/FilterSection";
 import {usePriceFilter} from "../../../hooks/usePriceFilter";
-import {PriceData, PriceFilterData} from "../../../props/PriceData";
+import {PriceData} from "../../../props/PriceData";
+import {PriceFilterData} from "../../../props/FilterData";
 
 interface IngredientsSectionProps {
     onCreateCard?: () => void;
