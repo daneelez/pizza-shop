@@ -6,6 +6,7 @@ import Navigation from "./components/navigation/Navigation";
 import Account from "./components/screens/account/Account";
 import Control from "./components/screens/control/Control";
 import NotifyToaster from "./components/notify_toaster/NotifyToaster";
+import OrderPage from "./components/screens/order/OrderPage";
 
 
 const App: React.FC = () => {
@@ -23,6 +24,7 @@ const App: React.FC = () => {
                     {page === 'home' && <Home/>}
                     {page === 'account' && <Account/>}
                     {page === 'control' && <Control/>}
+                    {page === 'orders' && <OrderPage/>}
                 </div>
             </div>
             <NotifyToaster/>
