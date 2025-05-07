@@ -36,7 +36,9 @@ const IngredientFilter: React.FC<IngredientFilterProps> = ({selectedIngredients,
             {isIngredientModalOpen && (
                 <ModalWindow title={'Выберите ингредиенты для фильтрации'} list={ingredients}
                              onChange={handleIngredientChange}
-                             onChecked={isSelected} onToggle={setIsIngredientModalOpen}/>)}
+                             onChecked={isSelected} onToggle={setIsIngredientModalOpen}
+                             type={'many'}
+                />)}
 
         </div>
     );

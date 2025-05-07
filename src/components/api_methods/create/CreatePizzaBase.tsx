@@ -5,6 +5,7 @@ import CommandButton from "../../command_button/CommandButton";
 import {useCRUD} from "../../../hooks/useCRUD";
 import {usePizzaBase} from "../../../contexts/PizzaBaseContext";
 import {PizzaBaseProps, PizzaBaseRequest} from "../../../props/PizzaBase";
+import {errorToaster, succesToaster} from "../../notify_toaster/NotifyToaster";
 
 interface CreatePizzaBaseProps {
     userID: string;
@@ -16,7 +17,7 @@ const CreatePizzaBase: React.FC<CreatePizzaBaseProps> = ({userID}) => {
 
     const {setBases} = usePizzaBase();
 
-    const {create} = useCRUD<PizzaBaseProps, PizzaBaseRequest>('/bases');
+    const {create, getAll} = useCRUD<PizzaBaseProps, PizzaBaseRequest>('/bases');
 
     const handleCreate = async () => {
         const floatPrice = parseFloat(price);
@@ -27,10 +28,18 @@ const CreatePizzaBase: React.FC<CreatePizzaBaseProps> = ({userID}) => {
         };
 
         try {
-            const result = await create(userID, data);
+            const response = await create(userID, data);
 
-            const validData = result.data ?? [];
-            setBases(validData);
+            if (!response.data) {
+                errorToaster("Ошибка создания основы!")
+            } else {
+                succesToaster("Основа успешно создана!")
+            }
+
+            const currentList = await getAll(userID).then(res =>
+                res.data ? res.data : []);
+
+            setBases(currentList);
 
             setName('');
             setPrice('');

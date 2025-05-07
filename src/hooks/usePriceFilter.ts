@@ -7,8 +7,11 @@ interface usePriceFilterProps {
 
 export const usePriceFilter = ({data, type}: usePriceFilterProps) => {
 
-    const curMin = Number(localStorage.getItem(`curMin-${type}`));
-    const curMax = Number(localStorage.getItem(`curMax-${type}`));
+    const initMin = 0;
+    const initMax = 1e4;
+
+    const curMin = Number(initMin);
+    const curMax = Number(initMax);
 
     const [minPrice, setMinPrice] = useState(curMin);
     const [maxPrice, setMaxPrice] = useState(curMax);
@@ -27,9 +30,8 @@ export const usePriceFilter = ({data, type}: usePriceFilterProps) => {
             if (item.price > max) max = item.price;
         }
 
-        localStorage.setItem(`curMin-${type}`, min);
-        localStorage.setItem(`curMax-${type}`, max);
-    }, [data, type]);
+        setLocalMax(max);
+    }, [type]);
 
     const handleChangeLocalMin = (min: string) => {
         const minNum = Number(min);

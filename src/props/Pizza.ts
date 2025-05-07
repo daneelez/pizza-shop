@@ -9,10 +9,12 @@ export interface PizzaProps {
     base: PizzaBaseProps;
     ingredients: IngredientProps[];
     price: number;
-    sides: PizzaSideProps[];
+    side: PizzaSideProps;
 }
 
 export interface PizzaRequest {
     name: string;
-    price: number;
+    base: PizzaBaseProps;
+    ingredients: IngredientProps[];
+    side: PizzaSideProps | null;
 }

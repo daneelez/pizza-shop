@@ -1,8 +1,9 @@
-.home-container {
+.home-section-container {
     display: flex;
     flex-direction: column;
     align-items: start;
     padding: 2rem 3rem;
+    width: 100%;
 }
 
 .home-section-title {

@@ -6,9 +6,15 @@ import {useCRUD} from "../../../hooks/useCRUD";
 import {useIngredients} from "../../../contexts/IngredientContext";
 import {IngredientProps, IngredientRequest} from "../../../props/Ingredient";
 import IngredientCard from "../../cards/Ingredient_card/IngredientCard";
+import {PizzaSideProps, PizzaSideRequest} from "../../../props/PizzaSide";
+import {usePizzaSide} from "../../../contexts/PizzaSideContext";
+import {errorToaster, succesToaster} from "../../notify_toaster/NotifyToaster";
+import {updateRelated} from "../../../hooks/useChangeRelated";
+import {PizzaProps, PizzaRequest} from "../../../props/Pizza";
+import {usePizza} from "../../../contexts/PizzaContext";
 
 interface UpdateIngredientProps {
-    userID: string;
+    userID: string,
 }
 
 const UpdateIngredient: React.FC<UpdateIngredientProps> = ({userID}) => {
@@ -17,8 +23,12 @@ const UpdateIngredient: React.FC<UpdateIngredientProps> = ({userID}) => {
     const [curIngredient, setCurIngredient] = useState<IngredientProps | null>(null);
 
     const {ingredients, setIngredients} = useIngredients();
+    const {sides, setSides} = usePizzaSide();
+    const {pizzas, setPizzas} = usePizza();
 
     const {update, getAll} = useCRUD<IngredientProps, IngredientRequest>('/ingredients');
+    const {update: updateSides} = useCRUD<PizzaSideProps, PizzaSideRequest>('/sides');
+    const {update: updatePizzas} = useCRUD<PizzaProps, PizzaRequest>('/pizza');
 
     const handleUpdate = async () => {
         if (!curIngredient) {
@@ -33,11 +43,61 @@ const UpdateIngredient: React.FC<UpdateIngredientProps> = ({userID}) => {
         };
 
         try {
-            await update(userID, curIngredient.id, data);
+            const response = await update(userID, curIngredient.id, data);
+
+            if (!response.data) {
+                errorToaster("Ошибка обновления ингредиента!")
+            } else {
+                succesToaster("Ингредиент успешно обновлен!")
+            }
+
             const currentList = await getAll(userID).then(res =>
                 res.data ? res.data : []);
 
             setIngredients(currentList);
+
+            const updatedIngredient = {...curIngredient, ...data};
+
+            const getSideProps = (side: PizzaSideProps) => ({
+                name: side.name,
+                ingredients: side.ingredients,
+                notAllowedList: side.notAllowedList,
+            });
+
+            const updatedSides = await updateRelated(
+                {
+                    userID: userID,
+                    items: sides,
+                    updatedEntry: updatedIngredient,
+                    type: 'ingredients',
+                    filter: 'update',
+                    updateRemote: updateSides,
+                    getItemProps: getSideProps,
+                }
+            );
+
+            setSides(updatedSides);
+
+            const getPizzaProps = (pizza: PizzaProps) => ({
+                name: pizza.name,
+                ingredients: pizza.ingredients,
+                base: pizza.base,
+                side: pizza.side,
+            });
+
+            const updatedPizzas = await updateRelated(
+                {
+                    userID: userID,
+                    items: pizzas,
+                    updatedEntry: updatedIngredient,
+                    type: 'ingredients',
+                    filter: 'update',
+                    updateRemote: updatePizzas,
+                    getItemProps: getPizzaProps,
+                }
+            );
+
+            setPizzas(updatedPizzas);
 
             setName('');
             setPrice('');
