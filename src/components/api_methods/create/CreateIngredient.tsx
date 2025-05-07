@@ -5,6 +5,7 @@ import CommandButton from "../../command_button/CommandButton";
 import {useCRUD} from "../../../hooks/useCRUD";
 import {useIngredients} from "../../../contexts/IngredientContext";
 import {IngredientProps, IngredientRequest} from "../../../props/Ingredient";
+import {errorToaster, succesToaster} from "../../notify_toaster/NotifyToaster";
 
 interface CreateIngredientProps {
     userID: string;
@@ -16,7 +17,7 @@ const CreateIngredient: React.FC<CreateIngredientProps> = ({userID}) => {
 
     const {setIngredients} = useIngredients();
 
-    const {create} = useCRUD<IngredientProps, IngredientRequest>('/ingredients');
+    const {create, getAll} = useCRUD<IngredientProps, IngredientRequest>('/ingredients');
 
     const handleCreate = async () => {
         const floatPrice = parseFloat(price);
@@ -27,10 +28,19 @@ const CreateIngredient: React.FC<CreateIngredientProps> = ({userID}) => {
         };
 
         try {
-            const result = await create(userID, data);
+            const response = await create(userID, data);
 
-            const validData = result.data ?? [];
-            setIngredients(validData);
+            if (!response.data) {
+                errorToaster("Ошибка создания ингредиента!")
+            } else {
+                succesToaster("Ингредиент успешно создан!")
+            }
+
+            const currentList = await getAll(userID).then(res =>
+                res.data ? res.data : []);
+
+            setIngredients(currentList);
+
 
             setName('');
             setPrice('');

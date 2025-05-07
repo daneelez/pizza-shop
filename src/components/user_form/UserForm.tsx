@@ -36,7 +36,7 @@ const UserForm = () => {
                 </p>
             </div>
             <div
-                className='auth-container'
+                className='input-auth-container'
                 style={{display: !user ? 'flex' : 'none'}}
             >
                 <InputField type={'text'} placeholder={'Имя пользователя'} value={name}

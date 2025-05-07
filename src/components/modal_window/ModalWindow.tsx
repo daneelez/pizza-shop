@@ -6,25 +6,33 @@ interface ModalWindowProps {
     onChecked: (item: any) => boolean;
     onChange: (item: any) => void;
     onToggle: (item: boolean) => void;
+    type: 'alone' | 'many';
 }
 
-const ModalWindow: React.FC<ModalWindowProps> = ({title, list, onChecked, onToggle, onChange}) => {
+const ModalWindow: React.FC<ModalWindowProps> = ({title, list, onChecked, onToggle, onChange, type}) => {
     return (
         <div className="modal-overlay">
             <div className="modal-content">
                 <h3 className='modal-title'>{title}</h3>
                 <ul className="modal-list">
                     {list.map((item) => (
-                        <div key={item.id}>
+                        <li key={item.id}>
                             <label>
-                                <input
-                                    type="checkbox"
-                                    checked={onChecked(item)}
-                                    onChange={() => onChange(item)}
-                                />
+                                {type === "many" ? (
+                                    <input
+                                        type="checkbox"
+                                        checked={onChecked(item)}
+                                        onChange={() => onChange(item)}
+                                    />
+                                ) : (
+                                    <input
+                                        type="radio"
+                                        checked={onChecked(item)}
+                                        onChange={() => onChange(item)}
+                                    />)}
                                 {item.name} - {item.price}₽
                             </label>
-                        </div>
+                        </li>
                     ))}
                 </ul>
                 <div className="modal-footer">

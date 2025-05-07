@@ -6,18 +6,16 @@ import PizzaSideSection from "../../sections/pizza_side_section/PizzaSideSection
 
 const Home = () => {
     return (
-        <div className="home-container">
-            <section className="home-section-container">
-                <p className='home-section-title'>Пицца</p>
-                <PizzaSection/>
-                <p className='home-section-title'>Основы</p>
-                <PizzaBaseSection/>
-                <p className='home-section-title'>Ингредиенты</p>
-                <IngredientsSection/>
-                <p className='home-section-title'>Бортики</p>
-                <PizzaSideSection/>
-            </section>
-        </div>
+        <section className="home-section-container">
+            <p className='home-section-title'>Пицца</p>
+            <PizzaSection/>
+            <p className='home-section-title'>Основы</p>
+            <PizzaBaseSection/>
+            <p className='home-section-title'>Ингредиенты</p>
+            <IngredientsSection/>
+            <p className='home-section-title'>Бортики</p>
+            <PizzaSideSection/>
+        </section>
     );
 }
 

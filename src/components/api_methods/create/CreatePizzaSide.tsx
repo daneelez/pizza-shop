@@ -10,6 +10,7 @@ import {PizzaProps} from "../../../props/Pizza";
 import {useIngredients} from "../../../contexts/IngredientContext";
 import {useModalWindow} from "../../../hooks/useModalWindow";
 import ModalWindow from "../../modal_window/ModalWindow";
+import {errorToaster, succesToaster} from "../../notify_toaster/NotifyToaster";
 
 interface CreatePizzaSideProps {
     userID: string;
@@ -32,7 +33,7 @@ const CreatePizzaSide: React.FC<CreatePizzaSideProps> = ({userID}) => {
         isSelected,
     } = useModalWindow<IngredientProps>({selectedItems: selectedIngredients, setSelectedItems: setSelectedIngredients});
 
-    const {create} = useCRUD<PizzaSideProps, PizzaSideRequest>('/sides');
+    const {create, getAll} = useCRUD<PizzaSideProps, PizzaSideRequest>('/sides');
 
     const handleCreate = async () => {
         const data = {
@@ -42,10 +43,18 @@ const CreatePizzaSide: React.FC<CreatePizzaSideProps> = ({userID}) => {
         };
 
         try {
-            const result = await create(userID, data);
+            const response = await create(userID, data);
 
-            const validData = result.data ?? [];
-            setSides(validData);
+            if (!response.data) {
+                errorToaster("Ошибка создания бортика!")
+            } else {
+                succesToaster("Бортик успешно создан!")
+            }
+
+            const currentList = await getAll(userID).then(res =>
+                res.data ? res.data : []);
+
+            setSides(currentList);
 
             setName('');
             setSelectedIngredients([]);
@@ -73,7 +82,7 @@ const CreatePizzaSide: React.FC<CreatePizzaSideProps> = ({userID}) => {
             </div>
             {isIngredientModalOpen && (
                 <ModalWindow title={'Выберите ингредиенты'} list={ingredients} onChange={handleIngredientChange}
-                             onChecked={isSelected} onToggle={setIsIngredientModalOpen}/>)}
+                             onChecked={isSelected} onToggle={setIsIngredientModalOpen} type={'many'}/>)}
             <CommandButton size={"large"} type={'white'} command={handleCreate} title={"Создать"}/>
         </>
     );

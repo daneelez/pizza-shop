@@ -4,15 +4,23 @@ interface PizzaCardProps {
     name: string;
     ingredients: string[];
     price: number;
-    onAddToCart: () => void;
+    base: string;
+    side: string;
+    onAddToCart?: () => void;
 }
 
-const PizzaCard: React.FC<PizzaCardProps> = ({name, ingredients, price, onAddToCart}) => {
+const PizzaCard: React.FC<PizzaCardProps> = ({name, ingredients, price, onAddToCart, base, side}) => {
     return (
         <div className="pizza-card-container">
             <h3 className='pizza-card-title'>{name}</h3>
             <p className="pizza-card-ingredients">
                 Состав: {ingredients.join(', ')}...
+            </p>
+            <p className="pizza-card-ingredients">
+                Основа: {base}
+            </p>
+            <p className="pizza-card-ingredients">
+                Бортик: {side}
             </p>
             <div className="pizza-card-size-container">
                 <button className='pizza-card-size'>Small</button>

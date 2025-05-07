@@ -1,17 +1,77 @@
 import './CreateSection.css'
 import {useUser} from '../../../contexts/UserContext'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import CommandButton from "../../command_button/CommandButton";
 import ControlMenu from "../../control_menu/ControlMenu";
 import CreateMethod from "../../api_methods/create/CreateMethod";
 import UpdateMethod from "../../api_methods/update/UpdateMethod";
 import RemoveMethod from "../../api_methods/remove/RemoveMethod";
+import {useIngredients} from "../../../contexts/IngredientContext";
+import {usePizzaSide} from "../../../contexts/PizzaSideContext";
+import {usePizzaBase} from "../../../contexts/PizzaBaseContext";
+import {useCRUD} from "../../../hooks/useCRUD";
+import {IngredientProps, IngredientRequest} from "../../../props/Ingredient";
+import {PizzaBaseProps, PizzaBaseRequest} from "../../../props/PizzaBase";
+import {PizzaSideProps, PizzaSideRequest} from "../../../props/PizzaSide";
+import {usePizza} from "../../../contexts/PizzaContext";
+import {PizzaProps, PizzaRequest} from "../../../props/Pizza";
 
 const CreateSection = () => {
     const {user} = useUser();
 
     const [currentFocus, setCurrentFocus] = useState('');
     const [currentAction, setCurrentAction] = useState('');
+
+    const {setIngredients} = useIngredients();
+    const {setBases} = usePizzaBase();
+    const {setSides} = usePizzaSide();
+    const {setPizzas} = usePizza();
+
+    const {getAll: getAllIngredients} = useCRUD<IngredientProps, IngredientRequest>('/ingredients');
+    const {getAll: getAllBases} = useCRUD<PizzaBaseProps, PizzaBaseRequest>('/bases');
+    const {getAll: getAllSides} = useCRUD<PizzaSideProps, PizzaSideRequest>('/sides');
+    const {getAll: getAllPizzas} = useCRUD<PizzaProps, PizzaRequest>('/pizza');
+
+    useEffect(() => {
+        if (!user) {
+            setIngredients([]);
+            setSides([]);
+            setBases([]);
+            setPizzas([]);
+        } else {
+            getAllIngredients(user.id).then(res => {
+                if (res.data) {
+                    setIngredients(res.data);
+                } else {
+                    setIngredients([]);
+                }
+            });
+
+            getAllBases(user.id).then(res => {
+                if (res.data) {
+                    setBases(res.data);
+                } else {
+                    setBases([]);
+                }
+            });
+
+            getAllSides(user.id).then(res => {
+                if (res.data) {
+                    setSides(res.data);
+                } else {
+                    setSides([]);
+                }
+            });
+
+            getAllPizzas(user.id).then(res => {
+                if (res.data) {
+                    setPizzas(res.data);
+                } else {
+                    setPizzas([]);
+                }
+            });
+        }
+    }, []);
 
     let focusTitle;
 
