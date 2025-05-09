@@ -1,6 +1,9 @@
 import './OrderPage.css'
 import CommandButton from "../../command_button/CommandButton";
 import {useState} from "react";
+import OrderSection from "../../sections/order_section/OrderSection";
+import OrderList from "../../sections/order_section/OrderList";
+import NewOrderSection from "../../sections/order_section/NewOrderSection";
 
 const OrderPage = () => {
     const [currentFocus, setCurrentFocus] = useState('');
@@ -30,14 +33,21 @@ const OrderPage = () => {
                     isActive={currentFocus === 'orders'}
                 />
             </div>
-            <div className='control-content'>
-            </div>
-            <div className='control-content'>
-            </div>
-            <div className='control-content'>
-            </div>
-            <div className='control-content'>
-            </div>
+            {currentFocus === 'order' && (
+                <div className='control-content'>
+                    <OrderSection/>
+                </div>
+            )}
+            {currentFocus === 'orders' && (
+                <div className='control-content'>
+                    <OrderList/>
+                </div>
+            )}
+            {currentFocus === 'new' && (
+                <div className='control-content'>
+                    <NewOrderSection/>
+                </div>
+            )}
         </div>
     );
 }

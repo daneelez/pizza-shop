@@ -19,9 +19,17 @@
 }
 
 .create-focus-section {
-    margin-top: 1rem;
+    margin-block: 1rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.bottom-button-section {
+    display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 1rem;

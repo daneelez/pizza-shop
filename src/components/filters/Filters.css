@@ -28,6 +28,18 @@
     justify-content: center;
 }
 
+.date-filter-container {
+    display: flex;
+    flex-direction: column;
+    background: #212024;
+    border-radius: 8px;
+    margin-left: 2rem;
+    padding: 1rem;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+}
+
 .price-filter {
     color: #D1D1D1;
     display: flex;

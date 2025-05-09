@@ -1,0 +1,43 @@
+.order-card-container {
+    background-color: #212024;
+    border-radius: 16px;
+    display: flex;
+    max-width: 45rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: #D1D1D1;
+    padding: 1rem;
+}
+
+.order-card-title {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.order-pizzas-section {
+    flex-direction: column;
+    border-radius: 8px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    max-height: 10rem;
+}
+
+.order-description-container {
+    margin-top: auto;
+    background-color: #2C2D30;
+    border-radius: 8px;
+    max-height: 5rem;
+    padding: 0.5rem 0.5rem;
+}
+
+.order-bottom-container {
+    margin-top: auto;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    height: 2rem;
+}

@@ -1,7 +1,7 @@
 import './InputField.css'
 
 interface InputFieldProps {
-    type: 'text' | 'number' | 'password' | 'email'
+    type: 'text' | 'number' | 'password' | 'email' | 'datetime-local'
     size: 'small' | 'medium' | 'large'
     placeholder: string
     value: string | number

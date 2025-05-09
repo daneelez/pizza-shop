@@ -20,6 +20,17 @@ export const useModalWindow = <T extends { id: string }>({selectedItems, setSele
         setSelectedItems([item])
     }
 
+    const handleItemAdd = (item: T) => {
+        setSelectedItems(prev => {
+            const count = prev.filter(i => i.id === item.id).length;
+            if (count < 2) {
+                return [...prev, item];
+            } else {
+                return prev.filter(i => i.id !== item.id);
+            }
+        })
+    }
+
     const isSelected = (item: T) => {
         return selectedItems.some(i => i.id === item.id);
     }
@@ -28,6 +39,10 @@ export const useModalWindow = <T extends { id: string }>({selectedItems, setSele
         return selectedItems.length === 1 && selectedItems[0].id === item.id;
     }
 
+    const getCount = (item: T) => {
+        return selectedItems.filter(i => i.id === item.id).length;
+    };
+
     return {
         selectedItems,
         handleItemChange,
@@ -35,5 +50,7 @@ export const useModalWindow = <T extends { id: string }>({selectedItems, setSele
         isSelected,
         isSelectedOne,
         setSelectedItems,
+        getCount,
+        handleItemAdd,
     }
 }

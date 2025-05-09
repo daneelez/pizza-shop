@@ -12,12 +12,34 @@
     color: #D1D1D1;
 }
 
+.pizza-order-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
+    color: #D1D1D1;
+    background-color: #2C2D30;
+    padding: 0.5rem;
+}
+
 .pizza-card-title {
     font-size: 1.5rem;
 }
 
 .pizza-card-ingredients {
     font-size: 0.9rem;
+}
+
+.pizza-order-card-slice-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background-color: #D1D1D1;
+    border-radius: 8px;
+    color: #212024;
+    font-weight: bold;
+    padding: 0.5rem 0.5rem 1rem 0.5rem;
 }
 
 .pizza-card-size-container {
@@ -59,4 +81,13 @@
 
 .pizza-card-container svg {
     margin-top: -2rem;
+}
+
+.slice-card-container {
+    display: block;
+    margin-block: 0.23rem;
+    background-color: #D98425;
+    padding: 0.5rem;
+    border-radius: 8px;
+    width: 10vw;
 }

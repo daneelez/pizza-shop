@@ -2,7 +2,7 @@ import './CommandButton.css'
 
 interface CommandButtonProps {
     size: "small" | "medium" | "large"
-    type: "dark" | "white" | "black"
+    type: "dark" | "white" | "black" | 'orange'
     command: () => void
     title: string
     isActive?: boolean

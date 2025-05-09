@@ -59,10 +59,6 @@ const UpdatePizza: React.FC<UpdatePizzaProps> = ({userID}) => {
     const {update: updateSides, getAll: getAllSides} = useCRUD<PizzaSideProps, PizzaSideRequest>('/sides');
 
     const handleUpdate = async () => {
-        console.log("pizza.base", curPizza?.base);
-        console.log("selectedBases", selectedBases);
-        console.log("bases", bases);
-
         if (!curPizza || selectedBases.length === 0 || !name) return;
 
         const data = {

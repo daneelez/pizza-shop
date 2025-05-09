@@ -2,7 +2,7 @@ import './OrderSection.css'
 import {useEffect, useState} from "react";
 import {PizzaSize} from "../../../props/PizzaSize";
 import CommandButton from "../../command_button/CommandButton";
-import {PizzaOrderProps, PizzaProps, PizzaSliceRequest} from "../../../props/Pizza";
+import {PizzaOrderProps, PizzaProps, PizzaSliceRequest, PizzaSliceRequestCustom} from "../../../props/Pizza";
 import {usePizza} from "../../../contexts/PizzaContext";
 import {useModalWindow} from "../../../hooks/useModalWindow";
 import InputField from "../../input_field/InputField";
@@ -16,8 +16,12 @@ import {OrderProps, OrderRequest} from "../../../props/Order";
 import {useCRUD} from "../../../hooks/useCRUD";
 import OrderCard from "../../cards/order_card/OrderCard";
 import {succesToaster} from "../../notify_toaster/NotifyToaster";
+import {PizzaSideProps} from "../../../props/PizzaSide";
+import {useIngredients} from "../../../contexts/IngredientContext";
+import {usePizzaSide} from "../../../contexts/PizzaSideContext";
+import {usePizzaBase} from "../../../contexts/PizzaBaseContext";
 
-const OrderSection = () => {
+const NewOrderSection = () => {
     const [currentFocus, setCurrentFocus] = useState(0);
     const [selectedSize, setSelectedSize] = useState<number | null>(null);
     const [selectedSlices, setSelectedSlices] = useState<number[]>([]);
@@ -28,20 +32,20 @@ const OrderSection = () => {
     const [currentPizzasInOrder, setCurrentPizzasInOrder] = useState<PizzaOrderProps[]>([]);
 
     const [selectedIngredients, setSelectedIngredients] = useState<IngredientProps[]>([]);
-    const [selectedPizzas, setSelectedPizzas] = useState<PizzaProps[]>([]);
     const [selectedBases, setSelectedBases] = useState<PizzaBaseProps[]>([]);
+    const [selectedSides, setSelectedSides] = useState<PizzaSideProps[]>([]);
 
-    const [slices, setSlices] = useState<(PizzaSliceRequest | null)[]>([null]);
+    const [slices, setSlices] = useState<(PizzaSliceRequestCustom | null)[]>([null]);
 
     const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
-    const [isPizzaModalOpen, setIsPizzaModalOpen] = useState(false);
+    const [isSideModalOpen, setIsSideModalOpen] = useState(false);
     const [isSliceInfoModalOpen, setIsSliceInfoModalOpen] = useState(false);
     const [isBaseModalOpen, setIsBaseModalOpen] = useState(false);
     const [isUserModalOpen, setIsUserModalOpen] = useState(false);
 
-    const [bases, setBases] = useState<PizzaBaseProps[]>([]);
-
-    const {pizzas} = usePizza();
+    const {ingredients} = useIngredients();
+    const {sides} = usePizzaSide();
+    const {bases} = usePizzaBase();
 
     const [curOrder, setCurOrder] = useState<OrderProps | null>(null);
 
@@ -63,9 +67,9 @@ const OrderSection = () => {
     } = useModalWindow<UserProps>({selectedItems: selectedUsers, setSelectedItems: setSelectedUsers});
 
     const {
-        handleItemReplace: handlePizzaChange,
-        isSelectedOne: isPizzaSelected,
-    } = useModalWindow<PizzaProps>({selectedItems: selectedPizzas, setSelectedItems: setSelectedPizzas});
+        handleItemReplace: handlePizzaSideChange,
+        isSelectedOne: isPizzaSideSelected,
+    } = useModalWindow<PizzaSideProps>({selectedItems: selectedSides, setSelectedItems: setSelectedSides});
 
     const {
         handleItemReplace: handlePizzaBaseChange,
@@ -93,47 +97,23 @@ const OrderSection = () => {
         );
     };
 
-    const updateSlices = () => {
-        if (selectedPizzas.length === 0 || selectedSlices.length === 0) return;
-
-        const pizzaSliceProps: PizzaSliceRequest = {
-            name: selectedPizzas[0].name,
-            base: selectedPizzas[0].base,
-            side: selectedPizzas[0].side,
-            ingredients: selectedPizzas[0].ingredients,
-        }
-
-        setBases(prev => {
-            const exist = bases.find((base) => base.id === selectedPizzas[0].base.id)
-            if (exist) return [...prev];
-            return [...prev, selectedPizzas[0].base];
-        })
+    const updateProps = (type: 'ingredients' | 'side') => {
+        if (selectedSlices.length === 0) return;
 
         setSlices(prev => {
             const updated = [...prev];
-            selectedSlices.forEach(index => {
-                if (index >= 0 && index < updated.length) {
-                    updated[index] = pizzaSliceProps;
-                }
-            });
-            return updated;
-        });
-    };
 
-    const updateIngredients = () => {
-        if (selectedSlices.length !== 1) return;
-        const index = selectedSlices[0];
+            for (const index of selectedSlices) {
+                const original = updated[index];
 
-        setSlices(prev => {
-            const updated = [...prev];
-            const original = updated[index];
-
-            if (!original) return prev;
-
-            updated[index] = {
-                ...original,
-                ingredients: [...selectedIngredients],
-            };
+                updated[index] = {
+                    ...original,
+                    name: null,
+                    ...(type === 'ingredients'
+                        ? {ingredients: [...selectedIngredients]}
+                        : {side: selectedSides[0]}),
+                };
+            }
 
             return updated;
         });
@@ -143,7 +123,7 @@ const OrderSection = () => {
         setSelectedSize(null);
         setSlices([null]);
         setSelectedBases([]);
-        setSelectedPizzas([]);
+        setSelectedSides([]);
         setSelectedIngredients([]);
         setDate(new Date().toISOString());
         setDescription('')
@@ -267,8 +247,18 @@ const OrderSection = () => {
                                 <CommandButton
                                     size={"large"}
                                     type={'black'}
-                                    title={"Выбрать пиццу"}
-                                    command={() => setIsPizzaModalOpen(true)}
+                                    title={"Выбрать бортик"}
+                                    command={() => setIsSideModalOpen(true)}
+                                />
+                            </div>
+                            <div className='modal-container'>
+                                <CommandButton
+                                    size={"large"}
+                                    type={'black'}
+                                    title={"Выбрать ингредиенты"}
+                                    command={() => {
+                                        setIsIngredientModalOpen(true);
+                                    }}
                                 />
                             </div>
                             {selectedSlices.length === 1 && slices[selectedSlices[0]] !== null && (
@@ -277,20 +267,9 @@ const OrderSection = () => {
                                         <CommandButton
                                             size={"large"}
                                             type={'black'}
-                                            title={"Удвоить ингредиенты"}
-                                            command={() => {
-                                                setIsIngredientModalOpen(true);
-                                                setSelectedIngredients(slices[selectedSlices[0]]!!.ingredients);
-                                            }}
-                                        />
-                                    </div>
-                                    <div className='modal-container'>
-                                        <CommandButton
-                                            size={"large"}
-                                            type={'black'}
                                             title={"Информация о куске"}
                                             command={() => {
-                                                setSelectedIngredients(slices[selectedSlices[0]]!!.ingredients);
+                                                setSelectedIngredients(slices[selectedSlices[0]]!!.ingredients ?? []);
                                                 setIsSliceInfoModalOpen(true);
                                             }}
                                         />
@@ -309,19 +288,19 @@ const OrderSection = () => {
                             )}
                         </div>
                     </div>
-                    {isPizzaModalOpen && (
-                        <ModalWindow title={'Выберите пиццу'} list={pizzas} onChange={handlePizzaChange}
-                                     onChecked={isPizzaSelected} onToggle={() => {
-                            updateSlices();
-                            setIsPizzaModalOpen(!isPizzaModalOpen);
+                    {isSideModalOpen && (
+                        <ModalWindow title={'Выберите бортик'} list={sides} onChange={handlePizzaSideChange}
+                                     onChecked={isPizzaSideSelected} onToggle={() => {
+                            updateProps('side');
+                            setIsSideModalOpen(!isSideModalOpen);
                             setSelectedSlices([]);
-                        }} type="alone" onClose={setIsPizzaModalOpen}/>)}
+                        }} type="alone" onClose={setIsSideModalOpen}/>)}
 
                     {isIngredientModalOpen && (
-                        <ModalWindow title={'Выберите ингредиенты'} list={selectedPizzas[0].ingredients}
+                        <ModalWindow title={'Выберите ингредиенты'} list={ingredients}
                                      onChange={handleIngredientChange}
                                      onChecked={isIngredientSelected} onToggle={() => {
-                            updateIngredients();
+                            updateProps('ingredients');
                             setIsIngredientModalOpen(!isIngredientModalOpen);
                             setSelectedSlices([]);
                         }} onClose={setIsIngredientModalOpen}
@@ -356,7 +335,8 @@ const OrderSection = () => {
                     )}
                     {isBaseModalOpen && (
                         <ModalWindow title={'Выберите основу'} list={bases} onChange={handlePizzaBaseChange}
-                                     onChecked={isPizzaBaseSelected} onToggle={setIsBaseModalOpen} type={'alone'}/>)}
+                                     onChecked={isPizzaBaseSelected} onToggle={setIsBaseModalOpen}
+                                     type={'alone'}/>)}
                 </div>
             )}
 
@@ -451,4 +431,4 @@ const OrderSection = () => {
     );
 }
 
-export default OrderSection;
+export default NewOrderSection;

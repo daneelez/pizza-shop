@@ -25,6 +25,14 @@
     border-radius: 8px;
 }
 
+.command-button-orange {
+    color: #212024;
+    text-align: center;
+    border: none;
+    background-color: #D98425;
+    border-radius: 8px;
+}
+
 .command-button-white, .command-button-black, .command-button-dark {
     transition: transform 0.3s;
 }

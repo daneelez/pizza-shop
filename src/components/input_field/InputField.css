@@ -15,6 +15,10 @@
     background-color: #2C2D30;
 }
 
+.white-text {
+    color: #D1D1D1;
+}
+
 .input-field {
     border: none;
     border-radius: 8px;

@@ -1,26 +1,27 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {succesToaster, errorToaster} from "../components/notify_toaster/NotifyToaster";
+import {UserProps} from "../props/User";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const PREFIX = "/user";
 
-export type User = {
-    id: string;
-    name: string;
-};
-
 export type UserContextType = {
-    user: User | null;
+    user: UserProps | null;
     login: (name: string, password: string) => Promise<void>;
     logout: () => void;
     register: (name: string, password: string) => Promise<void>;
+    read: () => Promise<UserProps[] | null>;
 };
+
+type Users = {
+    users: UserProps[];
+}
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
 
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<UserProps | null>(null);
 
     useEffect(() => {
         const curUser = localStorage.getItem("user");
@@ -80,8 +81,25 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({children}
         localStorage.removeItem("user");
     }
 
+    const read = async () => {
+        try {
+            const response = await fetch(`${API_URL}${PREFIX}/read`)
+
+            if (response.ok) {
+                const userList: Users = await response.json();
+                return userList.users;
+            } else {
+                return null;
+            }
+
+        } catch (error) {
+            errorToaster("Ошибка получения пользователей!");
+            return null;
+        }
+    }
+
     return (
-        <UserContext.Provider value={{user, login, logout, register}}>
+        <UserContext.Provider value={{user, login, logout, register, read}}>
             {children}
         </UserContext.Provider>
     );
@@ -89,7 +107,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({children}
 
 export const useUser = () => {
     const context = useContext(UserContext);
-    if (!context) throw new Error("No user contexts");
+    if (!context) throw new Error("UserProvider не найден");
 
     return context;
 }

@@ -10,3 +10,10 @@ export interface IngredientsFilterData {
     maxPrice: number;
     ingredients: IngredientProps[];
 }
+
+export interface OrderFilterData {
+    minPrice: number;
+    maxPrice: number;
+    dateStart: string;
+    dateEnd: string;
+}
