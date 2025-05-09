@@ -40,7 +40,7 @@ const OrderCard: React.FC<OrderCardProps> = ({order}) => {
                     Цена:
                 </p>
                     <p className='pizza-card-ingredients'>
-                    {order.price}₽ ({order.price * order.owners.length}₽)
+                    {order.price}₽ ({(order.price * order.owners.length).toFixed(2)}₽)
                 </p>
                 </span>
             </div>
