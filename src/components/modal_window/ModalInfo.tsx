@@ -13,7 +13,7 @@ const ModalInfo: React.FC<ModalInfoProps> = ({title, item, onClose, getCount}) =
         <div className="modal-overlay">
             <div className="modal-content">
                 <h3 className='modal-title'>{title}</h3>
-                <h4 className='modal-item-title'>Название куска: {item.name ?? 'custom'}</h4>
+                <h4 className='modal-item-title'>Название куска: {item?.name ?? 'custom'}</h4>
                 <div className='modal-info-container'>
                     <div className='modal-item'>
                         <p className="modal-list-title">
@@ -21,13 +21,14 @@ const ModalInfo: React.FC<ModalInfoProps> = ({title, item, onClose, getCount}) =
                         </p>
                         <ul className='modal-list modal-info-list'>
                             <li>
-                                Название: {item.side.name ?? 'базовый'}
+                                Название: {item?.side?.name ?? 'базовый'}
                             </li>
                             <li>
-                                Ингредиенты: {item.side.ingredients.join(', ') ?? ''}...
+                                Ингредиенты:
+                                {item?.side?.ingredients?.map((it: any) => it.name).join(', ') ?? ''}
                             </li>
                             <li>
-                                Цена: {item.side.price ?? 0}₽
+                                Цена: {item?.side?.price ?? 0}₽
                             </li>
                         </ul>
                     </div>
@@ -36,7 +37,7 @@ const ModalInfo: React.FC<ModalInfoProps> = ({title, item, onClose, getCount}) =
                             Ингредиенты
                         </p>
                         <ul className="modal-list modal-info-list">
-                            {item.ingredients && item.ingredients.map((ing: any) => {
+                            {item?.ingredients && item?.ingredients.map((ing: any) => {
                                 const count = getCount ? getCount(ing) : 1
                                 return (
                                     <li key={ing.id}>

@@ -75,6 +75,7 @@
     flex-direction: column;
     align-items: center;
     padding: 0.5rem;
+    width: 50%;
 }
 
 .modal-item-title {

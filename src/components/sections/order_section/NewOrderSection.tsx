@@ -261,7 +261,7 @@ const NewOrderSection = () => {
                                     }}
                                 />
                             </div>
-                            {selectedSlices.length === 1 && slices[selectedSlices[0]] !== null && (
+                            {selectedSlices.length === 1 && slices[selectedSlices[0]] && (
                                 <>
                                     <div className='modal-container'>
                                         <CommandButton
@@ -269,7 +269,7 @@ const NewOrderSection = () => {
                                             type={'black'}
                                             title={"Информация о куске"}
                                             command={() => {
-                                                setSelectedIngredients(slices[selectedSlices[0]]!!.ingredients ?? []);
+                                                setSelectedIngredients(slices[selectedSlices[0]]?.ingredients ?? []);
                                                 setIsSliceInfoModalOpen(true);
                                             }}
                                         />

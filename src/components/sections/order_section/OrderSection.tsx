@@ -271,7 +271,7 @@ const OrderSection = () => {
                                     command={() => setIsPizzaModalOpen(true)}
                                 />
                             </div>
-                            {selectedSlices.length === 1 && slices[selectedSlices[0]] !== null && (
+                            {selectedSlices.length === 1 && slices[selectedSlices[0]] && (
                                 <>
                                     <div className='modal-container'>
                                         <CommandButton
@@ -280,7 +280,7 @@ const OrderSection = () => {
                                             title={"Удвоить ингредиенты"}
                                             command={() => {
                                                 setIsIngredientModalOpen(true);
-                                                setSelectedIngredients(slices[selectedSlices[0]]!!.ingredients);
+                                                setSelectedIngredients(slices[selectedSlices[0]]?.ingredients ?? []);
                                             }}
                                         />
                                     </div>
@@ -290,7 +290,7 @@ const OrderSection = () => {
                                             type={'black'}
                                             title={"Информация о куске"}
                                             command={() => {
-                                                setSelectedIngredients(slices[selectedSlices[0]]!!.ingredients);
+                                                setSelectedIngredients(slices[selectedSlices[0]]?.ingredients ?? []);
                                                 setIsSliceInfoModalOpen(true);
                                             }}
                                         />
