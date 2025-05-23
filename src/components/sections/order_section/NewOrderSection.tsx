@@ -97,6 +97,14 @@ const NewOrderSection = () => {
         );
     };
 
+    const selectAllSlices = () => {
+        setSelectedSlices((prev) =>
+            prev.length === selectedSize
+                ? []
+                : Array.from({length: selectedSize ? selectedSize : 0}, (_, i) => i)
+        );
+    };
+
     const updateProps = (type: 'ingredients' | 'side') => {
         if (selectedSlices.length === 0) return;
 
@@ -152,6 +160,7 @@ const NewOrderSection = () => {
         const newPizzaInOrderProps: PizzaOrderProps = {
             slices: validSlices,
             size: size,
+            owners: selectedUsers ? selectedUsers : user ? [user] : [],
         }
 
         if (currentPizzasInOrder.length === 0) {
@@ -243,6 +252,14 @@ const NewOrderSection = () => {
                         <div
                             className='create-method-container'
                         >
+                            <div className='modal-container'>
+                                <CommandButton
+                                    size={"large"}
+                                    type={'black'}
+                                    title={"Выбрать все куски"}
+                                    command={() => selectAllSlices()}
+                                />
+                            </div>
                             <div className='modal-container'>
                                 <CommandButton
                                     size={"large"}
@@ -354,7 +371,7 @@ const NewOrderSection = () => {
                     <CommandButton
                         size={"large"}
                         type={'black'}
-                        title={"Разделить заказ"}
+                        title={"Разделить пиццу"}
                         command={() => setIsUserModalOpen(true)}
                     />
                     <CommandButton

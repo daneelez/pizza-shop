@@ -9,7 +9,7 @@ import NotifyToaster from "./components/notify_toaster/NotifyToaster";
 import OrderPage from "./components/screens/order/OrderPage";
 
 
-const App: React.FC = () => {
+const App = () => {
     const [page, setPage] = useState('home');
 
     const handlePageChange = (page: string) => {

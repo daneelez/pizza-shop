@@ -93,6 +93,14 @@ const OrderSection = () => {
         );
     };
 
+    const selectAllSlices = () => {
+        setSelectedSlices((prev) =>
+            prev.length === selectedSize
+                ? []
+                : Array.from({length: selectedSize ? selectedSize : 0}, (_, i) => i)
+        );
+    };
+
     const updateSlices = () => {
         if (selectedPizzas.length === 0 || selectedSlices.length === 0) return;
 
@@ -147,6 +155,7 @@ const OrderSection = () => {
         setSelectedIngredients([]);
         setDate(new Date().toISOString());
         setDescription('')
+        setSelectedUsers([]);
     }
 
     const savePizzaToOrder = () => {
@@ -172,6 +181,7 @@ const OrderSection = () => {
         const newPizzaInOrderProps: PizzaOrderProps = {
             slices: validSlices,
             size: size,
+            owners: selectedUsers ? selectedUsers : user ? [user] : [],
         }
 
         if (currentPizzasInOrder.length === 0) {
@@ -200,8 +210,16 @@ const OrderSection = () => {
     const prepareOrder = () => {
         if (!user) return;
 
+        const orderOwners = Array.from(
+            new Map(
+                currentPizzasInOrder
+                    .flatMap(pizza => pizza.owners)
+                    .map(owner => [owner.id, owner])
+            ).values()
+        );
+
         const initOrderProps: OrderRequest = {
-            owners: selectedUsers,
+            owners: orderOwners,
             pizzas: currentPizzasInOrder,
             description: description,
             date: date,
@@ -263,6 +281,14 @@ const OrderSection = () => {
                         <div
                             className='create-method-container'
                         >
+                            <div className='modal-container'>
+                                <CommandButton
+                                    size={"large"}
+                                    type={'black'}
+                                    title={"Выбрать все куски"}
+                                    command={() => selectAllSlices()}
+                                />
+                            </div>
                             <div className='modal-container'>
                                 <CommandButton
                                     size={"large"}
@@ -374,7 +400,7 @@ const OrderSection = () => {
                     <CommandButton
                         size={"large"}
                         type={'black'}
-                        title={"Разделить заказ"}
+                        title={"Разделить пиццу"}
                         command={() => setIsUserModalOpen(true)}
                     />
                     <CommandButton

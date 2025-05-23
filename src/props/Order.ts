@@ -9,6 +9,7 @@ export interface OrderProps {
     description: string;
     date: string;
     price: number;
+    perUserPrice: Record<string, number>;
 }
 
 export interface OrderRequest {

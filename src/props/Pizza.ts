@@ -2,6 +2,7 @@ import {PizzaBaseProps} from "./PizzaBase";
 import {PizzaSideProps} from "./PizzaSide";
 import {IngredientProps} from "./Ingredient";
 import {PizzaSize} from "./PizzaSize";
+import {UserProps} from "./User";
 
 export interface PizzaProps {
     id: string;
@@ -44,4 +45,5 @@ export interface PizzaSliceProps {
 export interface PizzaOrderProps {
     slices: PizzaSliceProps[] | PizzaSliceRequest[];
     size: PizzaSize;
+    owners: UserProps[];
 }

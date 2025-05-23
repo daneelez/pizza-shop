@@ -1,12 +1,15 @@
 import './OrderCard.css'
 import {OrderProps} from "../../../props/Order";
 import PizzaOrderCard from "../pizza_card/PizzaOrderCard";
+import {useUser} from "../../../contexts/UserContext";
 
 interface OrderCardProps {
     order: OrderProps;
 }
 
 const OrderCard: React.FC<OrderCardProps> = ({order}) => {
+    const {user} = useUser();
+
     return (
         <div className="order-card-container">
             <h3 className='order-card-title'>Заказ №({order.id})</h3>
@@ -40,7 +43,7 @@ const OrderCard: React.FC<OrderCardProps> = ({order}) => {
                     Цена:
                 </p>
                     <p className='pizza-card-ingredients'>
-                    {order.price}₽ ({(order.price * order.owners.length).toFixed(2)}₽)
+                    {user && order.perUserPrice[user.id]}₽ ({order.price}₽)
                 </p>
                 </span>
             </div>
